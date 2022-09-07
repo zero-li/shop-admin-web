@@ -13,7 +13,9 @@ export default defineConfig({
     alias: {
       "~": path.resolve(__dirname, "src")
     },
+    // git commit --amend --author "zgo <zero.zhh.li@gmail.com>"
 
+  },
 
   server:{
     proxy:{
@@ -24,7 +26,4 @@ export default defineConfig({
       },
     }
   },
-    // git commit --amend --author "zgo <zero.zhh.li@gmail.com>"
-
-  }
 })
