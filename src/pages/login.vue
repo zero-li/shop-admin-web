@@ -16,10 +16,18 @@
             </div>
             <el-form :model="form" class="w-[250px]">
                 <el-form-item >
-                    <el-input v-model="form.username" />
+                    <el-input v-model="form.username" placeholder="请输入用户名">
+                        <template #prefix>
+                            <el-icon><User /></el-icon>
+                        </template>
+                    </el-input>
                 </el-form-item>
                 <el-form-item >
-                    <el-input v-model="form.password" />
+                    <el-input v-model="form.password" placeholder="请输入密码">
+                        <template #prefix>
+                            <el-icon><Lock /></el-icon>
+                        </template>
+                    </el-input>
                 </el-form-item>
                 
                 <el-form-item>
