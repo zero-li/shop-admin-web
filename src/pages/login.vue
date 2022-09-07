@@ -1,6 +1,6 @@
 <template>
     <el-row class="min-h-screen bg-indigo-500">
-        <el-col  :lg="16" :md="12" class="flex items-center justify-center">
+        <el-col :lg="16" :md="12" class="flex items-center justify-center">
             <div>
                 <div class="font-bold text-light-50 text-5xl">欢迎光临</div>
                 <div class="text-gray-200 text-base my-2">此站点是Zgo 商城后台</div>
@@ -14,24 +14,28 @@
                 <span>账号密码登录</span>
                 <span class="h-[1px] w-16 bg-gray-200"></span>
             </div>
-            <el-form :model="form" class="w-[250px]">
-                <el-form-item >
+            <el-form ref="formRef" :rules="rules" :model="form" class="w-[250px]">
+                <el-form-item prop="username">
                     <el-input v-model="form.username" placeholder="请输入用户名">
                         <template #prefix>
-                            <el-icon><User /></el-icon>
+                            <el-icon>
+                                <User />
+                            </el-icon>
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item >
+                <el-form-item prop="password">
                     <el-input v-model="form.password" placeholder="请输入密码">
                         <template #prefix>
-                            <el-icon><Lock /></el-icon>
+                            <el-icon>
+                                <Lock />
+                            </el-icon>
                         </template>
                     </el-input>
                 </el-form-item>
-                
+
                 <el-form-item>
-                    <el-button round color="#626aef" type="primary" class="w-[250px]"  @click="onSubmit">登 录</el-button>
+                    <el-button round color="#626aef" type="primary" class="w-[250px]" @click="onSubmit">登 录</el-button>
                 </el-form-item>
             </el-form>
 
@@ -45,16 +49,45 @@
 
 
 <script setup>
-import { reactive } from 'vue'
+import { ref ,reactive } from 'vue'
 
 // do not use same name with ref
 const form = reactive({
     username: '',
     password: '',
-    
+
 })
 
+const rules = {
+    username:[
+        {
+            required: true,
+            message:'用户名不能为空',
+            trigger: 'blur'
+        }
+
+    ],
+    password:[
+    {
+            required: true,
+            message:'密码不能为空',
+            trigger: 'blur'
+        }
+    ]
+}
+
+const formRef = ref(null)
+
+
+
 const onSubmit = () => {
-    console.log('submit!')
+    formRef.value.validate((valid)=>{
+        if(!valid){
+            return false;
+        }
+        console.log("验证通过");
+    })
+
+    
 }
 </script>
