@@ -49,7 +49,11 @@
 
 
 <script setup>
-import { ref ,reactive } from 'vue'
+import { ref, reactive } from 'vue'
+import { ElNotification } from 'element-plus'
+
+
+import { login } from "~/api/manager"
 
 // do not use same name with ref
 const form = reactive({
@@ -59,18 +63,18 @@ const form = reactive({
 })
 
 const rules = {
-    username:[
+    username: [
         {
             required: true,
-            message:'用户名不能为空',
+            message: '用户名不能为空',
             trigger: 'blur'
         }
 
     ],
-    password:[
-    {
+    password: [
+        {
             required: true,
-            message:'密码不能为空',
+            message: '密码不能为空',
             trigger: 'blur'
         }
     ]
@@ -81,13 +85,34 @@ const formRef = ref(null)
 
 
 const onSubmit = () => {
-    formRef.value.validate((valid)=>{
-        if(!valid){
+    formRef.value.validate((valid) => {
+        if (!valid) {
             return false;
         }
+
+        login(form.username, form.password)
+            .then(res => {
+                console.log(res.data.data)
+                ElNotification({
+                    message: '登录成功',
+                    type: 'success',
+                    duration: 3000
+                })
+
+            })
+            .catch(err=>{
+            ElNotification({
+                message: err.response.data.msg || "请求失败",
+                type: 'error',
+                duration:3000
+            })
+        })
+
+
+
         console.log("验证通过");
     })
 
-    
+
 }
 </script>

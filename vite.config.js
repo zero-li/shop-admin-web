@@ -1,6 +1,6 @@
-import { fileURLToPath, URL } from 'node:url'
-
-import { defineConfig } from 'vite'
+import {
+  defineConfig
+} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
 
@@ -11,7 +11,20 @@ export default defineConfig({
   plugins: [vue(), WindiCSS()],
   resolve: {
     alias: {
-      "~":path.resolve(__dirname, "src")
+      "~": path.resolve(__dirname, "src")
+    },
+
+
+  server:{
+    proxy:{
+      '/api': {
+        target: 'http://ceshi13.dishait.cn',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
     }
+  },
+    // git commit --amend --author "zgo <zero.zhh.li@gmail.com>"
+
   }
 })
