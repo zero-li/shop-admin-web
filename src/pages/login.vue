@@ -1,20 +1,20 @@
 <template>
-    <el-row>
-        <el-col :span="16">
+    <el-row class="min-h-screen bg-indigo-500">
+        <el-col :span="16" class="flex items-center justify-center">
             <div>
-                <div>欢迎光临</div>
-                <div>此站点是Zgo 商城后台</div>
+                <div class="font-bold text-light-50 text-5xl">欢迎光临</div>
+                <div class="text-gray-200 text-base my-2">此站点是Zgo 商城后台</div>
             </div>
         </el-col>
 
-        <el-col :span="8">
-            <h2>欢迎回来</h2>
-            <div>
-                <span></span>
+        <el-col :span="8" class="bg-light-50 flex items-center justify-center flex-col">
+            <h2 class="font-bold text-3xl text-gray-800">欢迎回来</h2>
+            <div class="flex items-center justify-center my-5 text-gray-300 space-x-2">
+                <span class="h-[1px] w-16 bg-gray-200"></span>
                 <span>账号密码登录</span>
-                <span></span>
+                <span class="h-[1px] w-16 bg-gray-200"></span>
             </div>
-            <el-form :model="form" label-width="120px">
+            <el-form :model="form" class="w-[250px]">
                 <el-form-item >
                     <el-input v-model="form.username" />
                 </el-form-item>
@@ -23,7 +23,7 @@
                 </el-form-item>
                 
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">登 录</el-button>
+                    <el-button round color="#626aef" type="primary" class="w-[250px]"  @click="onSubmit">登 录</el-button>
                 </el-form-item>
             </el-form>
 
