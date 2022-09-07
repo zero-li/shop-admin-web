@@ -25,7 +25,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="form.password" placeholder="请输入密码">
+                    <el-input v-model="form.password" placeholder="请输入密码" show-password>
                         <template #prefix>
                             <el-icon>
                                 <Lock />
@@ -51,9 +51,11 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ElNotification } from 'element-plus'
-
-
+import { useRouter } from 'vue-router'
 import { login } from "~/api/manager"
+import { useCookies } from '@vueuse/integrations/useCookies'
+
+const router = useRouter()
 
 // do not use same name with ref
 const form = reactive({
@@ -99,14 +101,20 @@ const onSubmit = () => {
                     duration: 3000
                 })
 
+                const cookie = useCookies()
+                cookie.set("admin-token", res.data.data.token)
+
+                // 跳转到后台首页
+                router.push("/")
+
             })
-            .catch(err=>{
-            ElNotification({
-                message: err.response.data.msg || "请求失败",
-                type: 'error',
-                duration:3000
+            .catch(err => {
+                ElNotification({
+                    message: err.response.data.msg || "请求失败",
+                    type: 'error',
+                    duration: 3000
+                })
             })
-        })
 
 
 
