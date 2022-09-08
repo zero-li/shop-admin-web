@@ -1,10 +1,10 @@
 import axios from "axios"
 import {
-    ElNotification
-} from "element-plus"
+    getToken
+} from "~/composables/auth"
 import {
-    useCookies
-} from "@vueuse/integrations/useCookies"
+    toast
+} from "~/composables/util"
 import {
     type
 } from "windicss/utils"
@@ -17,8 +17,7 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
     // 往header头自动添加token
-    const cookie = useCookies()
-    const token = cookie.get("admin-token")
+    const token = getToken()
 
     if (token) {
         config.headers["token"] = token
@@ -39,12 +38,7 @@ service.interceptors.response.use(function (response) {
 
 }, function (error) {
     // 错误
-
-    ElNotification({
-        message: error.response.data.msg || "请求失败",
-        type: 'error',
-        duration: 3000
-    })
+    toast(error.response.data.msg || "请求失败",'error')
 
     return Promise.reject(error)
 })
