@@ -1,6 +1,7 @@
 import router from "~/router";
 import { getToken} from '~/composables/auth'
 import { toast} from '~/composables/util'
+import store from "./store"
 
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
@@ -17,6 +18,13 @@ router.beforeEach((to, from, next) => {
         toast("请勿重复登录","error")
         return next({path: from.path ? from.path : "/"})
     }
+
+    // 如果用户登录了，自动获取用户信息，并存储在vuex当中
+    if(token){
+        store.dispatch("getInfo")
+    }
+
+
 
     next()
 })

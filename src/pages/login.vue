@@ -99,22 +99,11 @@ const onSubmit = () => {
         }
         loading.value = true
 
-        login(form.username, form.password)
+        store.dispatch("login", form)
             .then(res => {
                 console.log(res)
                 
                 toast("登录成功")
-
-                // 存储token
-                setToken(res.token)
-
-
-                getInfo().then(res=>{
-                    console.log(res)
-                    store.commit("SET_USERINFO", res)
-
-                })
-
                 // 跳转到后台首页
                 router.push("/")
 
