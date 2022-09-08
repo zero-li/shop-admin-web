@@ -14,6 +14,8 @@ import store from './store'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import "./permission"
+import "nprogress/nprogress.css"
+
 
 
 const app = createApp(App);
