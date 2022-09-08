@@ -52,7 +52,7 @@
 import { ref, reactive } from 'vue'
 import { ElNotification } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { login } from "~/api/manager"
+import { login,getInfo } from "~/api/manager"
 import { useCookies } from '@vueuse/integrations/useCookies'
 
 const router = useRouter()
@@ -83,6 +83,7 @@ const rules = {
 }
 
 const formRef = ref(null)
+const loading = ref(false)
 
 
 
@@ -91,10 +92,11 @@ const onSubmit = () => {
         if (!valid) {
             return false;
         }
+        loading.value = true
 
         login(form.username, form.password)
             .then(res => {
-                console.log(res.data.data)
+                console.log(res)
                 ElNotification({
                     message: '登录成功',
                     type: 'success',
@@ -102,18 +104,19 @@ const onSubmit = () => {
                 })
 
                 const cookie = useCookies()
-                cookie.set("admin-token", res.data.data.token)
+                cookie.set("admin-token", res.token)
+
+
+                getInfo().then(res=>{
+                    console.log(res)
+                })
 
                 // 跳转到后台首页
                 router.push("/")
 
             })
-            .catch(err => {
-                ElNotification({
-                    message: err.response.data.msg || "请求失败",
-                    type: 'error',
-                    duration: 3000
-                })
+            .finally(()=>{
+                loading.value = false
             })
 
 
