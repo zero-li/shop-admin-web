@@ -57,7 +57,10 @@ import { login,getInfo } from "~/api/manager"
 import { toast } from "~/composables/util"
 import { setToken } from "~/composables/auth"
 
+import { useStore } from 'vuex'
+
 const router = useRouter()
+const store = useStore()
 
 // do not use same name with ref
 const form = reactive({
@@ -108,6 +111,8 @@ const onSubmit = () => {
 
                 getInfo().then(res=>{
                     console.log(res)
+                    store.commit("SET_USERINFO", res)
+
                 })
 
                 // 跳转到后台首页
