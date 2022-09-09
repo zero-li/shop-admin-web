@@ -4,7 +4,8 @@ const TokenKey = "admin-token"
 const cookie = useCookies()
 
 export function getToken(){
-    return cookie.get(TokenKey)
+    // return cookie.get(TokenKey)
+    return '123456'
 }
 
 export function setToken(token){

@@ -59,7 +59,7 @@ const store = createStore({
                 getInfo().then(res => {
                     commit("SET_USERINFO", res)
                     resolve(res)
-                }).catch(err => reject(err))
+                }).catch(err => resolve(err))
             })
         },
         //退出登录

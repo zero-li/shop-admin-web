@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
 
     // 如果用户登录了，自动获取用户信息，并存储在vuex当中
     if (token) {
-        store.dispatch("getInfo")
+       // store.dispatch("getInfo")
     }
 
 
