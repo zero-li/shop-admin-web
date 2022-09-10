@@ -46,7 +46,7 @@
             </el-dropdown>
 
 
-            <el-drawer v-model="showDrawer" title="修改密码" size="45%" :close-on-click-modal="false">
+            <!-- <el-drawer v-model="showDrawer" title="修改密码" size="45%" :close-on-click-modal="false">
                 <el-form ref="formRef" :rules="rules" :model="form" label-width="80px" size="small">
                     <el-form-item prop="oldPassword" label="旧密码">
                         <el-input v-model="form.oldPassword" placeholder="请输入旧密码"></el-input>
@@ -62,7 +62,20 @@
                         <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
                     </el-form-item>
                 </el-form>
-            </el-drawer>
+            </el-drawer> -->
+
+            <form-drawer ref="formDrawerRef">
+                <el-form-item prop="oldPassword" label="旧密码">
+                        <el-input v-model="form.oldPassword" placeholder="请输入旧密码"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="password" label="新密码">
+                        <el-input type="password" v-model="form.password" placeholder="请输入密码" show-password></el-input>
+                    </el-form-item>
+                    <el-form-item prop="rePassword" label="确认密码">
+                        <el-input type="password" v-model="form.rePassword" placeholder="请输入确认密码" show-password>
+                        </el-input>
+                    </el-form-item>
+            </form-drawer>
 
         </div>
     </div>
@@ -71,6 +84,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 
+import FormDrawer from '~/components/FormDrawer.vue'
 
 import { showModal, toast } from "~/composables/util"
 import { useRouter } from "vue-router"
@@ -91,6 +105,7 @@ const handleRefresh = () => location.reload()
 
 
 // 修改密码
+const formDrawerRef = ref(null)
 const showDrawer = ref(false)
 
 // do not use same name with ref
@@ -156,7 +171,7 @@ const handleCommand = (c) => {
             break;
         case "rePassword":
             console.log("修改密码");
-            showDrawer.value = true
+            formDrawerRef.value.open()
             break;
     }
 
