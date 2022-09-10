@@ -64,17 +64,19 @@
                 </el-form>
             </el-drawer> -->
 
-            <form-drawer ref="formDrawerRef">
-                <el-form-item prop="oldPassword" label="旧密码">
-                        <el-input v-model="form.oldPassword" placeholder="请输入旧密码"></el-input>
+            <form-drawer ref="formDrawerRef" title="修改密码" destroyOnClose @submit="onSubmit">
+                <el-form ref="formRef" :rules="rules" :model="form" label-width="80px" size="small">
+                    <el-form-item prop="oldpassword" label="旧密码">
+                        <el-input v-model="form.oldpassword" placeholder="请输入旧密码"></el-input>
                     </el-form-item>
                     <el-form-item prop="password" label="新密码">
                         <el-input type="password" v-model="form.password" placeholder="请输入密码" show-password></el-input>
                     </el-form-item>
-                    <el-form-item prop="rePassword" label="确认密码">
-                        <el-input type="password" v-model="form.rePassword" placeholder="请输入确认密码" show-password>
+                    <el-form-item prop="repassword" label="确认密码">
+                        <el-input type="password" v-model="form.repassword" placeholder="请输入确认密码" show-password>
                         </el-input>
                     </el-form-item>
+                </el-form>
             </form-drawer>
 
         </div>
@@ -147,9 +149,12 @@ const onSubmit = () => {
             return false
         }
         loading.value = true
+        formDrawerRef.value.showLoading()
+
 
         toast("修改密码成功，请重新登录")
         loading.value = false
+        formDrawerRef.value.hideLoading()
         // updatepassword(form)
         // .then(res=>{
         //     toast("修改密码成功，请重新登录")
