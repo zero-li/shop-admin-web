@@ -84,115 +84,44 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+    import FormDrawer from '~/components/FormDrawer.vue'
 
-import FormDrawer from '~/components/FormDrawer.vue'
-
-import { showModal, toast } from "~/composables/util"
-import { useRouter } from "vue-router"
-import { useStore } from "vuex"
 import { useFullscreen } from '@vueuse/core'
+import { useRePassword,useLogout } from "~/composables/useManager"
 
 const {
     // 是否全屏状态
     isFullscreen,
     // 切换全屏
-    toggle } = useFullscreen()
+    toggle
+} = useFullscreen()
 
-const router = useRouter()
-const store = useStore()
+const {
+    formDrawerRef,
+    form,
+    rules,
+    formRef,
+    onSubmit,
+    openRePasswordForm
+} = useRePassword()
 
-const handleRefresh = () => location.reload()
-
-
-
-// 修改密码
-const formDrawerRef = ref(null)
-const showDrawer = ref(false)
-
-// do not use same name with ref
-const form = reactive({
-    oldPassword: "",
-    password: "",
-    rePassword: ""
-})
-
-const rules = {
-    oldPassword: [
-        {
-            required: true,
-            message: '旧密码不能为空',
-            trigger: 'blur'
-        },
-    ],
-    password: [
-        {
-            required: true,
-            message: '新密码不能为空',
-            trigger: 'blur'
-        },
-    ],
-    rePassword: [
-        {
-            required: true,
-            message: '确认密码不能为空',
-            trigger: 'blur'
-        },
-    ]
-}
-
-const formRef = ref(null)
-const loading = ref(false)
-const onSubmit = () => {
-    formRef.value.validate((valid) => {
-        if (!valid) {
-            return false
-        }
-        loading.value = true
-        formDrawerRef.value.showLoading()
-
-
-        toast("修改密码成功，请重新登录")
-        loading.value = false
-        formDrawerRef.value.hideLoading()
-        // updatepassword(form)
-        // .then(res=>{
-        //     toast("修改密码成功，请重新登录")
-        //     store.dispatch("logout")
-        //     // 跳转回登录页
-        //     router.push("/login")
-        // })
-        // .finally(()=>{
-        //     loading.value = false
-        // })
-
-    })
-}
+const {
+    handleLogout
+} = useLogout()
 
 const handleCommand = (c) => {
     switch (c) {
         case "logout":
-            handleLogout();
+            handleLogout()
             break;
         case "rePassword":
-            console.log("修改密码");
-            formDrawerRef.value.open()
+            openRePasswordForm()
             break;
     }
-
-};
-
-
-function handleLogout() {
-
-    showModal("是否要退出登录？").then(res => {
-
-    }).finally(() => {
-        // 提示退出登录成功
-        toast("退出登录成功")
-    })
-
 }
+
+// 刷新
+const handleRefresh = () => location.reload()
 
 
 </script>
