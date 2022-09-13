@@ -10,8 +10,9 @@
 
 
 
-        <el-icon class="icon-btn">
-            <fold />
+        <el-icon class="icon-btn" @click="$store.commit('handleAsideWidth')">
+            <fold v-if="$store.state.asideWidth == '240px'"/>
+            <Expand v-else/>
         </el-icon>
         <el-tooltip content="刷新" effect="dark" placement="bottom">
             <el-icon class="icon-btn" @click="handleRefresh">

@@ -16,7 +16,10 @@ const store = createStore({
     setState() {
         return {
             // 用户信息
-            user: {}
+            user: {},
+            // 侧边宽度
+            asideWidth:"240px"
+
         }
 
     },
@@ -25,7 +28,13 @@ const store = createStore({
         // 记录用户信息
         SET_USERINFO(state, user) {
             state.user = user
-        }
+        },
+
+        // 展开/缩起侧边
+        handleAsideWidth(state){
+            state.asideWidth = state.asideWidth == "240px" ? "64px":"240px"
+        },
+
 
     },
 
