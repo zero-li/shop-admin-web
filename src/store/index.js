@@ -18,7 +18,10 @@ const store = createStore({
             // 用户信息
             user: {},
             // 侧边宽度
-            asideWidth:"240px"
+            asideWidth:"240px",
+
+            menus:[],
+            ruleNames:[]
 
         }
 
@@ -34,6 +37,13 @@ const store = createStore({
         handleAsideWidth(state){
             state.asideWidth = state.asideWidth == "240px" ? "64px":"240px"
         },
+
+        SET_MENUS(state,menus){
+            state.menus = menus
+        },
+        SET_RULENAMES(state,ruleNames){
+            state.ruleNames = ruleNames
+        }
 
 
     },
@@ -67,6 +77,8 @@ const store = createStore({
             return new Promise((resolve, reject) => {
                 getInfo().then(res => {
                     commit("SET_USERINFO", res)
+                    commit("SET_MENUS",res.menus)
+                    commit("SET_RULENAMES",res.ruleNames)
                     resolve(res)
                 }).catch(err => resolve(err))
             })

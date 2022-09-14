@@ -56,23 +56,7 @@ const defaultActive = ref(route.path)
 const isCollapse = computed(()=> !(store.state.asideWidth == "240px"))
 
 
-const asideMenus = [{
-    "name": "后台面板",
-    "icon": "help",
-    "child": [{
-        "name": "主控台",
-        "icon": "home-filled",
-        "frontpath": "/",
-    }]
-}, {
-    "name": "商城管理",
-    "icon": "shopping-bag",
-    "child": [{
-        "name": "商品管理",
-        "icon": "shopping-cart-full",
-        "frontpath": "/goods/list",
-    }]
-}]
+const asideMenus = computed(()=> store.state.menus)
 
 const handleSelect = (e)=>{
     router.push(e)
