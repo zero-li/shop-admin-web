@@ -8,9 +8,10 @@ import {
     hideFullLoading
 } from '~/composables/util'
 import store from "./store"
+import { addRouters } from "./router";
 
 // 全局前置守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     // 显示loading
     showFullLoading()
     const token = getToken()
@@ -32,8 +33,11 @@ router.beforeEach((to, from, next) => {
     }
 
     // 如果用户登录了，自动获取用户信息，并存储在vuex当中
+    let hasNewRoutes = false;
     if (token) {
-       store.dispatch("getInfo")
+       let {menus} = await store.dispatch("getInfo");
+       // 动态添加路由
+       hasNewRoutes = addRouters(menus)
     }
 
 
@@ -41,7 +45,7 @@ router.beforeEach((to, from, next) => {
     let title = (to.meta.title ? to.meta.title : "") + "-zgo商城后台"
     document.title = title
 
-    next()
+    hasNewRoutes ? next(to.fullPath) : next()
 })
 
 // 全局后置守卫
