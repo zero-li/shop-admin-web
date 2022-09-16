@@ -11,24 +11,6 @@ import GoodList from "~/pages/goods/list.vue"
 import CategoryList from "~/pages/category/list.vue"
 
 
-const routes = [{
-    path: "/",
-    name: "admin",
-    component: Admin,
-}, {
-    path: "/login",
-    component: Login,
-    meta: {
-        title: "登录页"
-    }
-}, {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: NotFound,
-    meta: {
-        title: "404"
-    }
-}]
 
 
 
@@ -53,6 +35,28 @@ const asyncRoutes = [{
     component: CategoryList,
     meta: {
         title: "分类列表"
+    }
+}]
+
+
+
+const routes = [{
+    path: "/",
+    name: "admin",
+    component: Admin,
+    children:asyncRoutes
+}, {
+    path: "/login",
+    component: Login,
+    meta: {
+        title: "登录页"
+    }
+}, {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
+    meta: {
+        title: "404"
     }
 }]
 

@@ -35,6 +35,7 @@ const store = createStore({
 
         // 展开/缩起侧边
         handleAsideWidth(state){
+            console.log("with:", state.asideWidth)
             state.asideWidth = state.asideWidth == "240px" ? "64px":"240px"
         },
 
