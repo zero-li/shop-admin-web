@@ -13,7 +13,7 @@ import {
 
 
 const store = createStore({
-    setState() {
+    state :()=>{
         return {
             // 用户信息
             user: {},
