@@ -1,5 +1,5 @@
 import { ref, reactive } from 'vue'
-import { logout, updatePassword } from "~/api/manager"
+import { logout, updatePassword, getMockInfo } from "~/api/manager"
 import { showModal, toast } from "~/composables/util"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
@@ -89,5 +89,22 @@ export function useLogout() {
 
     return {
         handleLogout
+    }
+}
+
+
+
+export function useMock() {
+    const router = useRouter()
+    const store = useStore()
+    function handleMock() {
+        getMockInfo().then((value)=>{
+            console.log(value)
+
+        });
+    }
+
+    return {
+        handleMock
     }
 }

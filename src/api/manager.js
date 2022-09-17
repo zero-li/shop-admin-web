@@ -9,6 +9,10 @@ export function login(username, password){
 }
 
 
+export function getMockInfo(){
+    return axios.get("/api/getRoleById?id=1")
+}
+
 export function getInfo(){
     return axios.post("/admin/getinfo")
 }

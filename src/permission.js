@@ -17,12 +17,12 @@ router.beforeEach(async (to, from, next) => {
     const token = getToken()
 
     // 没有登录，强制跳转回登录页
-    if (!token && to.path != "/login") {
-        toast("请先登录", "error")
-        return next({
-            path: "/login"
-        })
-    }
+    // if (!token && to.path != "/login") {
+    //     toast("请先登录", "error")
+    //     return next({
+    //         path: "/login"
+    //     })
+    // }
 
     // 防止重复登录
     if (token && to.path == "/login") {
