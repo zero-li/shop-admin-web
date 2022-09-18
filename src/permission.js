@@ -1,4 +1,4 @@
-import router from "~/router";
+import {router, addRouters} from "~/router";
 import {
     getToken
 } from '~/composables/auth'
@@ -8,7 +8,6 @@ import {
     hideFullLoading
 } from '~/composables/util'
 import store from "./store"
-import { addRouters } from "./router";
 
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {

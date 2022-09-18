@@ -7,7 +7,7 @@ import 'virtual:windi.css'
 
 
 import App from './App.vue'
-import router from './router'
+import {router} from './router'
 import store from './store'
 
 // 如果您正在使用CDN引入，请删除下面一行。

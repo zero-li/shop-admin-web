@@ -1,8 +1,9 @@
 <template>
     <div class="f-tag-list" :style="{ left:$store.state.asideWidth }">
 
-        <el-tabs tab-position="bottom" v-model="editableTabsValue" type="card" class="flex-1" closable @tab-remove="removeTab" style="min-width: 100px;">
-            <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name">
+        <el-tabs tab-position="bottom" v-model="activeTab" type="card" class="flex-1" closable @tab-remove="removeTab" style="min-width: 100px;"
+        @tab-change="changeTab">
+            <el-tab-pane :closable="item.path != '/'" v-for="item in tabList" :key="item.path" :label="item.name" :name="item.path">
             </el-tab-pane>
         </el-tabs>
 
@@ -30,67 +31,63 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import {useRoute, onBeforeRouteUpdate} from "vue-router";
+import { useCookies } from '@vueuse/integrations/useCookies';
+import { router } from '~/router';
+// import { router } from '../../router';
 
-let tabIndex = 2
-const editableTabsValue = ref('2')
-const editableTabs = ref([
+
+const cookie = useCookies()
+const route = useRoute()
+
+const activeTab = ref(route.path)
+const tabList = ref([
     {
-        title: 'Tab 1',
-        name: '1',
-        content: 'Tab 1 content',
+        name: '后台首页',
+        path: '/'
     },
-    {
-        title: 'Tab 2',
-        name: '2',
-        content: 'Tab 2 content',
-    },
-    {
-        title: 'Tab 3',
-        name: '3',
-        content: 'Tab 3 content',
-    },
-    {
-        title: 'Tab 4',
-        name: '4',
-        content: 'Tab 4 content',
-    },
-    {
-        title: 'Tab 5',
-        name: '5',
-        content: 'Tab 5 content',
-    },
-    {
-        title: 'Tab 6',
-        name: '6',
-        content: 'Tab 6 content',
-    },
-    {
-        title: 'Tab 7',
-        name: '7',
-        content: 'Tab 7 content',
-    },
-    {
-        title: 'Tab 8',
-        name: '8',
-        content: 'Tab 6 content',
-    },
-    {
-        title: 'Tab 9',
-        name: '9',
-        content: 'Tab 9 content',
-    },
+    
 ])
 
-const addTab = (targetName) => {
-    const newTabName = `${++tabIndex}`
-    editableTabs.value.push({
-        title: 'New Tab',
-        name: newTabName,
-        content: 'New Tab content',
-    })
-    editableTabsValue.value = newTabName
+// 添加标签导航
+const addTab = (tab) => {
+    let noTab = tabList.value.findIndex(t=>t.path == tab.path) == -1;
+    if(noTab){
+        tabList.value.push(tab);
+    }
+
+    cookie.set("tabList", tabList.value);
 }
-const removeTab = (targetName) => {
+
+// 初始化标签导航列表
+function initTabList(){
+    let tabs = cookie.get('tabList');
+    if(tabs){
+        tabList.value = tabs;
+    }
+
+}
+
+//调用
+initTabList()
+
+onBeforeRouteUpdate((to, from)=>{
+    activeTab.value = to.path;
+    addTab({
+        name : to.meta.title,
+        path: to.path
+    })
+})
+
+const  changeTab = (t) =>{
+    activeTab.value = t
+    router.push(t)
+}
+
+
+
+
+const removeTab = (tab) => {
     const tabs = editableTabs.value
     let activeName = editableTabsValue.value
     if (activeName === targetName) {
@@ -104,8 +101,10 @@ const removeTab = (targetName) => {
         })
     }
 
-    editableTabsValue.value = activeName
-    editableTabs.value = tabs.filter((tab) => tab.name !== targetName)
+    activeTab.value = activeName
+    tabList.value = tabs.filter((tab) => tab.name !== targetName)
+
+    cookie.set("tabList", tabList.value)
 }
 </script>
 <style scoped>
