@@ -87,22 +87,22 @@ const  changeTab = (t) =>{
 
 
 
-const removeTab = (tab) => {
-    const tabs = editableTabs.value
-    let activeName = editableTabsValue.value
-    if (activeName === targetName) {
+const removeTab = (path) => {
+    const tabs = tabList.value
+    let active= activeTab.value
+    if (active === path) {
         tabs.forEach((tab, index) => {
-            if (tab.name === targetName) {
+            if (tab.path === active) {
                 const nextTab = tabs[index + 1] || tabs[index - 1]
                 if (nextTab) {
-                    activeName = nextTab.name
+                    active = nextTab.path
                 }
             }
         })
     }
 
-    activeTab.value = activeName
-    tabList.value = tabs.filter((tab) => tab.name !== targetName)
+    activeTab.value = active
+    tabList.value = tabs.filter((tab) => tab.path !== path)
 
     cookie.set("tabList", tabList.value)
 }
