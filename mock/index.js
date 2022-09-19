@@ -13,11 +13,11 @@ export default [
                 "data": {
                     "panels": [{
                             "title": "支付订单",
-                            "value": 49,
+                            "value": 51,
                             "unit": "年",
                             "unitColor": "success",
                             "subTitle": "总支付订单",
-                            "subValue": 49,
+                            "subValue": 51,
                             "subUnit": ""
                         },
                         {
@@ -31,20 +31,20 @@ export default [
                         },
                         {
                             "title": "销售额",
-                            "value": "￥3.54",
+                            "value": 3.74,
                             "unit": "年",
-                            "unitColor": "primary",
+                            "unitColor": "",
                             "subTitle": "总销售额",
-                            "subValue": 3.54,
+                            "subValue": 3.74,
                             "subUnit": ""
                         },
                         {
                             "title": "新增用户",
-                            "value": 16,
+                            "value": 21,
                             "unit": "年",
                             "unitColor": "warning",
                             "subTitle": "总用户",
-                            "subValue": 16,
+                            "subValue": 21,
                             "subUnit": "人"
                         }
                     ]
