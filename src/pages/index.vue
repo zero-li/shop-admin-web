@@ -1,48 +1,65 @@
 <template>
     <div>
-
-        <br/>
-        <br/>
-
         后台首页
-        
+        <el-row :gutter="20">
+            <el-col :span="6" :offset="0" v-for="(item, index) in panels" :key="index">
+                <el-card class="border-0" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>{{item.title}}</span>
+                            <el-tag effect="plain" :type="item.unitColor">{{item.unit}}</el-tag>
+                        </div>
+                    </template>
 
-        <!-- {{$store.state.user.username}} -->
+                    <div class="text-3xl text-gray-600 font-bold">{{item.value}}</div>
+                    <el-divider />
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>{{item.subTitle}}</span>
+                        <span>{{item.subValue}}</span>
+                    </div>
 
-        <br/>
-        <br/>
-        <br/>
 
-        <el-button @click="handleLogout">退出登录</el-button>
+                </el-card>
+            </el-col>
+
+
+        </el-row>
+
 
 
 
     </div>
 </template>
 
+<style>
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text {
+    font-size: 14px;
+}
+
+.item {
+    margin-bottom: 18px;
+}
+</style>
+
 <script setup>
-
-    import { logout } from "~/api/manager"
-    import { showModal,toast } from "~/composables/util"
-    import { useRouter } from "vue-router"
-    import { useStore } from "vuex"
-
-    const router = useRouter()
-    const store = useStore()
-
-    function handleLogout(){
-        showModal("是否要退出登录？").then(res=>{
-            logout().finally(()=>{
-                store.dispatch("logout")
-
-                router.push("/login")
-
-                toast("退出登录成功")
-            })
-        })
-    }
+import { ref } from 'vue'
+import { getStatistics1 } from "~/api/index"
 
 
+
+const panels = ref([])
+
+getStatistics1().then((res) => {
+    panels.value = res.panels
+    console.log(panels.value)
+
+})
 
 
 
