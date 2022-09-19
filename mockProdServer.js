@@ -1,7 +1,9 @@
 import { createProdMockServer } from 'vite-plugin-mock/es/createProdMockServer'
-import roleMock from './mock/role'
-import userMock from './mock/user'
+import managerMock from './mock/manager'
 
 export function setupProdMockServer() {
-  createProdMockServer([...roleMock, ...userMock])
+  createProdMockServer([
+    ...managerMock, 
+  
+  ])
 }

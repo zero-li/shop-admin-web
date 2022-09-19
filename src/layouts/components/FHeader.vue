@@ -88,7 +88,7 @@
     import FormDrawer from '~/components/FormDrawer.vue'
 
 import { useFullscreen } from '@vueuse/core'
-import { useRePassword,useLogout , useMock} from "~/composables/useManager"
+import { useRePassword,useLogout} from "~/composables/useManager"
 
 const {
     // 是否全屏状态
@@ -110,16 +110,13 @@ const {
     handleLogout
 } = useLogout()
 
-const {
-    handleMock
-} = useMock()
 
 
 
 const handleCommand = (c) => {
     switch (c) {
         case "logout":
-        handleMock()
+        handleLogout()
             break;
         case "rePassword":
             openRePasswordForm()
