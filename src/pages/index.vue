@@ -42,7 +42,10 @@
                         </div>
                     </template>
 
-                    <div class="text-3xl text-gray-600 font-bold">{{item.value}}</div>
+                    <div class="text-3xl text-gray-600 font-bold">
+                        <!-- <CountToVue>{{item.value}}</CountToVue> -->
+                        <CountTo :value="item.value"/>
+                    </div>
                     <el-divider />
                     <div class="flex justify-between text-sm text-gray-500">
                         <span>{{item.subTitle}}</span>
@@ -65,6 +68,8 @@
 <script setup>
 import { ref } from 'vue'
 import { getStatistics1 } from "~/api/index"
+import CountToVue from '~/components/CountTo.vue';
+import CountTo from '../components/CountTo.vue';
 
 
 
