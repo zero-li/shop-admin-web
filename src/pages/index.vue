@@ -59,6 +59,8 @@
 
         </el-row>
 
+        <IndexNavs/>
+
 
 
 
@@ -70,6 +72,7 @@ import { ref } from 'vue'
 import { getStatistics1 } from "~/api/index"
 import CountToVue from '~/components/CountTo.vue';
 import CountTo from '../components/CountTo.vue';
+import IndexNavs from '../components/IndexNavs.vue';
 
 
 
