@@ -1,9 +1,12 @@
 <template>
-    {{d.num.toFixed(0)}}
+    <!-- {{d.num.toFixed(0)}} -->
+    <!--  判断是否是小数 -->
+    <!-- {{Number(d.num) === Math.round(d.num)? d.num: d.num.toFixed(2)}} -->
+    {{value}}
 </template>
 
 <script setup>
-import { reactive, watch } from "vue"
+import { computed, reactive, watch } from "vue"
 
 import gsap from "gsap"
 
@@ -28,5 +31,9 @@ function animateToValue(){
 animateToValue()
 
 watch(()=>props.value,()=>animateToValue())
+
+const value = computed(()=>{
+    return Number(d.num) === Math.round(d.num)? d.num: d.num.toFixed(2)
+})
 
 </script>

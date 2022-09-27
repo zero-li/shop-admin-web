@@ -4,3 +4,13 @@ import axios from '~/axios'
 export function getStatistics1(){
     return axios.get("/admin/statistics1")
 }
+
+// 后台首页统计3  订单统计 图表
+export function getStatistics3(type){
+    //return axios.get("/admin/statistics3?type="+type)
+    return axios.get("/admin/statistics3", {
+        params: {
+            type: type
+          }
+    });
+}
