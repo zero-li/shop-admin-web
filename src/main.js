@@ -29,4 +29,7 @@ app.use(store)
 app.use(router)
 app.use(ElementPlus)
 
+import permission from "~/directives/permission.js"
+app.use(permission)
+
 app.mount('#app')
