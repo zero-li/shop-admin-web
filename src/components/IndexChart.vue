@@ -12,8 +12,12 @@
     </el-card>
 </template>
 <script setup>
-import { ref,onMounted } from 'vue';
+import { ref,onMounted , onBeforeUnmount} from 'vue';
 import * as echarts from 'echarts';
+import { getStatistics3 } from '../api';
+import { useResizeObserver } from '@vueuse/core';
+
+
 
 
 const current = ref("week")
@@ -29,7 +33,8 @@ const options = [{
 }]
 
 const handleChoose = (type)=>{
-    current.value = type
+    current.value = type;
+    getData();
 }
 
 var myChart = null
@@ -40,20 +45,24 @@ onMounted(()=>{
     getData()
 })
 
+onBeforeUnmount(()=>{
+    if(myChart) echarts.dispose(myChart);
+})
+
 function getData(){
     var option;
 
     option = {
     xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: []
     },
     yAxis: {
         type: 'value'
     },
     series: [
         {
-        data: [120, 200, 150, 80, 70, 110, 130],
+        data: [],
         type: 'bar',
         showBackground: true,
         backgroundStyle: {
@@ -63,7 +72,22 @@ function getData(){
     ]
     };
 
-    option && myChart.setOption(option);
+    //option && myChart.setOption(option);
+
+    myChart.showLoading();
+
+    getStatistics3(current.value).then(res=>{
+        option.xAxis.data = res.x;
+        option.series[0].data = res.y;
+        myChart.setOption(option);
+
+    }).finally(()=>{
+        myChart.hideLoading();
+    });
+
 }
+
+const el = ref(null);
+useResizeObserver(el, (entries) => myChart.resize());
 
 </script>
